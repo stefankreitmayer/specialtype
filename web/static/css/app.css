@@ -1,1 +1,33 @@
-/* This file is for your main application css. */
+h1 {
+  text-align: center;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #181818;
+}
+
+.Profile__Board{
+  width: 90%;
+  margin: 30px auto;
+}
+
+.Profile__Cell{
+  text-align: center;
+  min-width: 1em;
+}
+
+.Profile__Cell--Char{
+  font-size: 1.5em;
+  color: #bbb;
+}
+
+.Profile__Cell--Hits{
+  color: #2d0;
+}
+
+.Profile__Cell--Misses{
+  color: #f1b;
+}
