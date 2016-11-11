@@ -42,9 +42,13 @@ update action model =
 
               Just exercise ->
                 let
-                    exercise' = { exercise | userInput = input }
+                    exercise' =
+                      if input == exercise.target then
+                          Nothing
+                      else
+                          Just { exercise | userInput = input }
                 in
-                    { model | exercise = Just exercise' }
+                    { model | exercise = exercise' }
       in
           (model', Cmd.none)
 

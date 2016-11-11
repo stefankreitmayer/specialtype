@@ -30,14 +30,14 @@ footer{
   -webkit-transform: translate(-50%,-50%);
 }
 
-.ExercisePanel--Target{
+.ExercisePanel__Target{
   display: block;
   padding: 5px;
   font-size: 36px;
   font-family: "Lucida Console", Monaco, monospace;
 }
 
-.ExercisePanel--Input{
+.ExercisePanel__Input{
   width: 100%;
   margin-top: 30px;
   padding: 5px;

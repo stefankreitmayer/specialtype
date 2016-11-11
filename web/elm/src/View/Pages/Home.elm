@@ -36,12 +36,12 @@ viewPracticePanel : Exercise -> Html Msg
 viewPracticePanel exercise =
   div
     [ class "ExercisePanel" ]
-    [ div [ class "ExercisePanel--Target" ] [ Html.text exercise.target ]
+    [ div [ class "ExercisePanel__Target" ] [ Html.text exercise.target ]
     , input
         [ placeholder "Type the above string"
         , autofocus True
         , onInput ChangeInput
-        , class "ExercisePanel--Input" ]
+        , class "ExercisePanel__Input" ]
         []
     ]
 
