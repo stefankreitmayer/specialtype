@@ -48,6 +48,10 @@ footer{
   font-family: "Lucida Console", Monaco, monospace;
 }
 
+.ExercisePanel__Input--Error{
+  background: #f1b;
+}
+
 .PlayButton{
   font-size: 36px;
   position: absolute;
@@ -69,6 +73,7 @@ footer{
 }
 
 .Profile__Cell--Char{
+  padding-bottom: 25px;
   font-size: 1.5em;
   color: #bbb;
 }

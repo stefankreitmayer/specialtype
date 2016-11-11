@@ -1,7 +1,7 @@
 module View.Pages.Home exposing (view)
 
 import Html exposing (Html,div,h1,button,table,tr,td,input)
-import Html.Attributes exposing (class,placeholder,autofocus)
+import Html.Attributes exposing (class,classList,placeholder,autofocus)
 import Html.Events exposing (onClick,onInput)
 
 import Dict
@@ -38,10 +38,13 @@ viewPracticePanel exercise =
     [ class "ExercisePanel" ]
     [ div [ class "ExercisePanel__Target" ] [ Html.text exercise.target ]
     , input
-        [ placeholder "Type the above string"
+        [ placeholder "Type what it says above"
         , autofocus True
         , onInput ChangeInput
-        , class "ExercisePanel__Input" ]
+        , classList [ ("ExercisePanel__Input", True)
+                    , ("ExercisePanel__Input--Error", String.startsWith exercise.userInput exercise.target |> not)
+                    ]
+        ]
         []
     ]
 
