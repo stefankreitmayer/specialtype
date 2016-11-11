@@ -2,6 +2,8 @@ module Update exposing (..)
 
 import Task
 import Navigation
+import String
+import Dict
 
 import Model exposing (..)
 import Model.Page exposing (Page(..))
@@ -42,13 +44,27 @@ update action model =
 
               Just exercise ->
                 let
+                    inputLength = String.length input
+                    profile' =
+                      if inputLength > String.length exercise.userInput then
+                          let
+                              isCorrect = String.startsWith input exercise.target
+                              targetChar = List.take inputLength (exercise.target |> String.toList) |> List.reverse |> List.head |> Maybe.withDefault 'x'
+                          in
+                              if isCorrect then
+                                  countAsHit targetChar model.profile
+                              else
+                                  countAsMiss targetChar model.profile
+                      else
+                          model.profile
                     exercise' =
                       if input == exercise.target then
                           Nothing
                       else
                           Just { exercise | userInput = input }
                 in
-                    { model | exercise = exercise' }
+                    { model | profile = profile'
+                            , exercise = exercise' }
       in
           (model', Cmd.none)
 
@@ -59,3 +75,25 @@ urlUpdate page model =
       model' = { model | currentPage = page }
   in
       (model', Cmd.none)
+
+
+countAsHit : Char -> Profile -> Profile
+countAsHit key profile =
+  let
+      oldScore =
+        Dict.get key profile
+        |> Maybe.withDefault (Score 0 0) -- won't happen
+      newScore = { oldScore | hits = oldScore.hits + 1 }
+  in
+      Dict.insert key newScore profile
+
+
+countAsMiss : Char -> Profile -> Profile
+countAsMiss key profile =
+  let
+      oldScore =
+        Dict.get key profile
+        |> Maybe.withDefault (Score 0 0) -- won't happen
+      newScore = { oldScore | misses = oldScore.misses + 1 }
+  in
+      Dict.insert key newScore profile
