@@ -24,8 +24,7 @@ view model =
 viewMainContent : Model -> List (Html Msg)
 viewMainContent model =
   [ h1 [] [ Html.text "Special Type" ]
-  , button [ onClick (Navigate Play) ]
-    [ Html.text "Play" ]
+  , button [ class "PlayButton", onClick (Navigate Play) ] [ Html.text "Practice" ]
   ]
 
 
