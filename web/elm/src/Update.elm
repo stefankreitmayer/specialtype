@@ -30,7 +30,7 @@ update action model =
 
     StartExercise ->
       let
-          model' = { model | exercise = Just newExercise }
+          model' = { model | exercise = Just (newExercise model.profile) }
       in
           (model', Cmd.none)
 
@@ -60,7 +60,7 @@ update action model =
                     progress' = inputLength |> max exercise.progress
                     exercise' =
                       if input == exercise.target then
-                          Nothing
+                          Just (newExercise profile')
                       else
                           Just { exercise | userInput = input
                                           , progress = progress' }

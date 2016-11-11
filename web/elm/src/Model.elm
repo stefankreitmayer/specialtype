@@ -33,13 +33,26 @@ initialModel =
 
 emptyProfile : Profile
 emptyProfile =
-  "!@£$%^&*()-_=+[]{};:'\"\\`~,./<>?"
+  allCharacters
   |> String.toList
   |> List.foldr (\char dict -> Dict.insert char (Score 0 0) dict) Dict.empty
 
 
-newExercise : Exercise
-newExercise =
-  { target = ";;'';;''[[]][[]];;'';;''[[]][[]]"
-  , userInput = ""
-  , progress = 0 }
+newExercise : Profile -> Exercise
+newExercise profile =
+  let
+      indexA = (Dict.values profile |> List.foldr (\score acc -> acc + score.hits) 0) % (String.length allCharacters)
+      indexB = (indexA * 2 + 7) % (String.length allCharacters)
+      indexC = ((Dict.values profile |> List.foldr (\score acc -> acc + score.misses) 0) * 5 + 3) % (String.length allCharacters)
+      a = allCharacters |> String.dropLeft indexA |> String.left 1
+      b = allCharacters |> String.dropLeft indexB |> String.left 1
+      c = allCharacters |> String.dropLeft indexC |> String.left 1
+      target = a++a++a++a++b++b++b++b++a++a++a++a++c++c++c++c++b++b++c++c++a++a++b++b++c++c++b++b++a++b++a++c++a++b
+  in
+      { target = target
+      , userInput = ""
+      , progress = 0 }
+
+
+allCharacters : String
+allCharacters = "(-_=+*!)@£$%^&[]{};:'\"\\`~,./<>?"
