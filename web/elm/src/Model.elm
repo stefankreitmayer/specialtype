@@ -13,7 +13,8 @@ type alias Model =
 
 type alias Exercise =
   { target : String
-  , userInput : String }
+  , userInput : String
+  , progress : Int }
 
 type alias Profile =
   Dict Char Score
@@ -40,4 +41,5 @@ emptyProfile =
 newExercise : Exercise
 newExercise =
   { target = ";;'';;''[[]][[]];;'';;''[[]][[]]"
-  , userInput = "" }
+  , userInput = ""
+  , progress = 0 }

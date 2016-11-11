@@ -46,7 +46,7 @@ update action model =
                 let
                     inputLength = String.length input
                     profile' =
-                      if inputLength > String.length exercise.userInput then
+                      if inputLength > exercise.progress then
                           let
                               isCorrect = String.startsWith input exercise.target
                               targetChar = List.take inputLength (exercise.target |> String.toList) |> List.reverse |> List.head |> Maybe.withDefault 'x'
@@ -57,11 +57,13 @@ update action model =
                                   countAsMiss targetChar model.profile
                       else
                           model.profile
+                    progress' = inputLength |> max exercise.progress
                     exercise' =
                       if input == exercise.target then
                           Nothing
                       else
-                          Just { exercise | userInput = input }
+                          Just { exercise | userInput = input
+                                          , progress = progress' }
                 in
                     { model | profile = profile'
                             , exercise = exercise' }
