@@ -8,7 +8,12 @@ import Model.Page exposing (Page(..))
 
 type alias Model =
   { currentPage : Page
-  , profile : Profile }
+  , profile : Profile
+  , exercise : Maybe Exercise }
+
+type alias Exercise =
+  { target : String
+  , userInput : String }
 
 type alias Profile =
   Dict Char Score
@@ -21,7 +26,8 @@ type alias Score =
 initialModel : Model
 initialModel =
   { currentPage = Home
-  , profile = emptyProfile }
+  , profile = emptyProfile
+  , exercise = Nothing }
 
 
 emptyProfile : Profile
@@ -29,3 +35,9 @@ emptyProfile =
   "!@£$%^&*()-_=+[]{};:'\"\\`~,./<>?"
   |> String.toList
   |> List.foldr (\char dict -> Dict.insert char (Score 0 0) dict) Dict.empty
+
+
+newExercise : Exercise
+newExercise =
+  { target = ";;'';;''[[]][[]];;'';;''[[]][[]]"
+  , userInput = "" }

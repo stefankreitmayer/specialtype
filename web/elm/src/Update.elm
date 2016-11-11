@@ -26,6 +26,28 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
+    StartExercise ->
+      let
+          model' = { model | exercise = Just newExercise }
+      in
+          (model', Cmd.none)
+
+
+    ChangeInput input ->
+      let
+          model' =
+            case model.exercise of
+              Nothing ->
+                model
+
+              Just exercise ->
+                let
+                    exercise' = { exercise | userInput = input }
+                in
+                    { model | exercise = Just exercise' }
+      in
+          (model', Cmd.none)
+
 
 urlUpdate : Page -> Model -> (Model, Cmd Msg)
 urlUpdate page model =

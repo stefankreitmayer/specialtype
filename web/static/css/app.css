@@ -19,6 +19,35 @@ footer{
   background: #181818;
 }
 
+.ExercisePanel{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  padding: 50px;
+  border: 1px solid #ccc;
+  background: #f2f2f2;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+}
+
+.ExercisePanel--Target{
+  display: block;
+  padding: 5px;
+  font-size: 36px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+.ExercisePanel--Input{
+  width: 100%;
+  margin-top: 30px;
+  padding: 5px;
+  color: #bbb;
+  background: #181818;
+  border: none;
+  font-size: 36px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
 .PlayButton{
   font-size: 36px;
   position: absolute;

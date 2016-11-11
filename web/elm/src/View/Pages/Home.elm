@@ -1,8 +1,8 @@
 module View.Pages.Home exposing (view)
 
-import Html exposing (Html,div,h1,button,table,tr,td)
-import Html.Attributes exposing (id,class)
-import Html.Events exposing (onClick)
+import Html exposing (Html,div,h1,button,table,tr,td,input)
+import Html.Attributes exposing (class,placeholder,autofocus)
+import Html.Events exposing (onClick,onInput)
 
 import Dict
 import String
@@ -16,16 +16,34 @@ import Msg exposing (..)
 view : Model -> Html Msg
 view model =
   div []
-    [ Html.main' [] (viewMainContent model)
+    [ Html.header [] [ h1 [] [ Html.text "Special Type" ] ]
+    , Html.main' [] [ viewMainContent model ]
     , Html.footer [] [ viewProfile model ]
     ]
 
 
-viewMainContent : Model -> List (Html Msg)
+viewMainContent : Model -> Html Msg
 viewMainContent model =
-  [ h1 [] [ Html.text "Special Type" ]
-  , button [ class "PlayButton", onClick (Navigate Play) ] [ Html.text "Practice" ]
-  ]
+  case model.exercise of
+    Nothing ->
+      button [ class "PlayButton", onClick StartExercise ] [ Html.text "Exercise" ]
+
+    Just exercise ->
+      viewPracticePanel exercise
+
+
+viewPracticePanel : Exercise -> Html Msg
+viewPracticePanel exercise =
+  div
+    [ class "ExercisePanel" ]
+    [ div [ class "ExercisePanel--Target" ] [ Html.text exercise.target ]
+    , input
+        [ placeholder "Type the above string"
+        , autofocus True
+        , onInput ChangeInput
+        , class "ExercisePanel--Input" ]
+        []
+    ]
 
 
 viewProfile : Model -> Html Msg

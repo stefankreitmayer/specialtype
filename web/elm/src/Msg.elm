@@ -8,6 +8,9 @@ import Model.Page exposing (Page(..))
 
 type Msg
   = Navigate Page
+  | StartExercise
+  | ChangeInput String
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
