@@ -51,10 +51,7 @@ update action model =
                               isCorrect = String.startsWith input exercise.target
                               targetChar = List.take inputLength (exercise.target |> String.toList) |> List.reverse |> List.head |> Maybe.withDefault 'x'
                           in
-                              if isCorrect then
-                                  countAsHit targetChar model.profile
-                              else
-                                  countAsMiss targetChar model.profile
+                              Dict.update targetChar (addToHistory isCorrect) model.profile
                       else
                           model.profile
                     progress' = inputLength |> max exercise.progress
@@ -79,23 +76,11 @@ urlUpdate page model =
       (model', Cmd.none)
 
 
-countAsHit : Char -> Profile -> Profile
-countAsHit key profile =
-  let
-      oldScore =
-        Dict.get key profile
-        |> Maybe.withDefault (Score 0 0) -- won't happen
-      newScore = { oldScore | hits = oldScore.hits + 1 }
-  in
-      Dict.insert key newScore profile
+addToHistory : Bool -> Maybe (List Bool) -> Maybe (List Bool)
+addToHistory hit maybeHistory =
+  case maybeHistory of
+    Just history ->
+      Just (history ++ [ hit ])
 
-
-countAsMiss : Char -> Profile -> Profile
-countAsMiss key profile =
-  let
-      oldScore =
-        Dict.get key profile
-        |> Maybe.withDefault (Score 0 0) -- won't happen
-      newScore = { oldScore | misses = oldScore.misses + 1 }
-  in
-      Dict.insert key newScore profile
+    Nothing ->
+      Nothing

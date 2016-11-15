@@ -17,11 +17,7 @@ type alias Exercise =
   , progress : Int }
 
 type alias Profile =
-  Dict Char Score
-
-type alias Score =
-  { hits : Int
-  , misses : Int }
+  Dict Char (List Bool)
 
 
 initialModel : Model
@@ -35,15 +31,15 @@ emptyProfile : Profile
 emptyProfile =
   allCharacters
   |> String.toList
-  |> List.foldr (\char dict -> Dict.insert char (Score 0 0) dict) Dict.empty
+  |> List.foldr (\char dict -> Dict.insert char [] dict) Dict.empty
 
 
 newExercise : Profile -> Exercise
 newExercise profile =
   let
-      indexA = (Dict.values profile |> List.foldr (\score acc -> acc + score.hits) 0) % (String.length allCharacters)
-      indexB = (indexA * 2 + 7) % (String.length allCharacters)
-      indexC = ((Dict.values profile |> List.foldr (\score acc -> acc + score.misses) 0) * 5 + 3) % (String.length allCharacters)
+      indexA = 0 -- TODO random numbers
+      indexB = 1
+      indexC = 2
       a = allCharacters |> String.dropLeft indexA |> String.left 1
       b = allCharacters |> String.dropLeft indexB |> String.left 1
       c = allCharacters |> String.dropLeft indexC |> String.left 1
