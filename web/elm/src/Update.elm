@@ -4,6 +4,7 @@ import Task
 import Navigation
 import String
 import Dict
+import Random
 
 import Model exposing (..)
 import Model.Page exposing (Page(..))
@@ -28,9 +29,12 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
-    NewExercise ->
+    RandomizeExercise ->
+      (model, Random.generate NewExercise (Random.int 0 (String.length allCharacters)))
+
+    NewExercise firstCharIndex ->
       let
-          model' = { model | exercise = Just (newExercise model.profile) }
+          model' = { model | exercise = Just (newExercise firstCharIndex model.profile) }
       in
           (model', Cmd.none)
 
@@ -56,16 +60,17 @@ update action model =
                           model.profile
                     progress' = inputLength |> max exercise.progress
                     exercise' =
-                      if inputLength >= String.length exercise.target then
-                        Just (newExercise model.profile)
-                      else
                         Just { exercise | userInput = input
                                         , progress = progress' }
                 in
                     { model | profile = profile'
                             , exercise = exercise' }
+
       in
-          (model', Cmd.none)
+          if isExerciseComplete model'.exercise then
+            update RandomizeExercise model'
+          else
+            (model', Cmd.none)
 
 
 urlUpdate : Page -> Model -> (Model, Cmd Msg)
@@ -84,3 +89,19 @@ addToHistory hit maybeHistory =
 
     Nothing ->
       Nothing
+
+
+newExercise : Int -> Profile -> Exercise
+newExercise firstCharIndex profile =
+  let
+      indexA = firstCharIndex
+      indexB = 1
+      indexC = 2
+      a = allCharacters |> String.dropLeft indexA |> String.left 1
+      b = allCharacters |> String.dropLeft indexB |> String.left 1
+      c = allCharacters |> String.dropLeft indexC |> String.left 1
+      target = a++a++a++a++b++b++b++b++a++a++a++a++c++c++c++c++b++b++c++c++a++a++b++b++c++c++b++b++a++b++a++c++a++b
+  in
+      { target = target
+      , userInput = ""
+      , progress = 0 }

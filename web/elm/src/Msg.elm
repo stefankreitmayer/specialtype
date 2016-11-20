@@ -8,7 +8,8 @@ import Model.Page exposing (Page(..))
 
 type Msg
   = Navigate Page
-  | NewExercise
+  | RandomizeExercise
+  | NewExercise Int
   | ChangeInput String
 
 
