@@ -34,9 +34,12 @@ update action model =
 
     NewExercise (a,b,c) ->
       let
-          model' = { model | exercise = Just (newExercise (a,b,c)) }
+          badRandomValues = a == b || a == c || b == c
       in
-          (model', Cmd.none)
+            if badRandomValues then
+              model |> update RandomizeExercise
+            else
+              ({ model | exercise = Just (newExercise (a,b,c)) }, Cmd.none)
 
 
     ChangeInput input ->
