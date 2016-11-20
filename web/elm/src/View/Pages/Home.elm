@@ -21,6 +21,7 @@ view : Model -> Html Msg
 view model =
   div []
     [ Html.main' [] [ viewMainContent model ]
+    , Html.div [ class "MobileWarning" ] [ Html.text "You need a keyboard to play this :/" ]
     , Html.footer [] [ viewProfile model ]
     ]
 

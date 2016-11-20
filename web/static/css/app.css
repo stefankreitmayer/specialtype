@@ -14,6 +14,7 @@ footer{
 }
 
 .ExercisePanel{
+  display: none;
   position: absolute;
   top: 50px;
   left: 50%;
@@ -55,6 +56,27 @@ footer{
   padding: 0.15em 0.35em 0.2em 0.35em;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
+}
+
+.MobileWarning{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  font-size: 17px;
+  background: #717;
+  color: #fee;
+}
+
+@media only screen and (min-width:960px){
+  .MobileWarning{
+    display: none;
+  }
+  .ExercisePanel{
+    display: block;
+  }
+  }
 }
 
 .ScoreList{
