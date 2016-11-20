@@ -108,7 +108,7 @@ specialCharacterAt index =
 
 randomCharacterAsString : Random.Generator String
 randomCharacterAsString =
-  Random.int 0 (String.length allCharacters)
+  Random.int 0 ((String.length allCharacters) - 1)
   |> Random.map specialCharacterAt
 
 
