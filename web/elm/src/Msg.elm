@@ -9,7 +9,7 @@ import Model.Page exposing (Page(..))
 type Msg
   = Navigate Page
   | RandomizeExercise
-  | NewExercise Int
+  | NewExercise (String,String,String)
   | ChangeInput String
 
 

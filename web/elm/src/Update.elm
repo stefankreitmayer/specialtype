@@ -30,11 +30,11 @@ update action model =
           (model', Navigation.newUrl pathname)
 
     RandomizeExercise ->
-      (model, Random.generate NewExercise (Random.int 0 (String.length allCharacters)))
+      (model, Random.generate NewExercise threeRandomCharactersAsStrings)
 
-    NewExercise firstCharIndex ->
+    NewExercise (a,b,c) ->
       let
-          model' = { model | exercise = Just (newExercise firstCharIndex model.profile) }
+          model' = { model | exercise = Just (newExercise (a,b,c)) }
       in
           (model', Cmd.none)
 
@@ -91,17 +91,27 @@ addToHistory hit maybeHistory =
       Nothing
 
 
-newExercise : Int -> Profile -> Exercise
-newExercise firstCharIndex profile =
+newExercise : (String,String,String) -> Exercise
+newExercise (a,b,c) =
   let
-      indexA = firstCharIndex
-      indexB = 1
-      indexC = 2
-      a = allCharacters |> String.dropLeft indexA |> String.left 1
-      b = allCharacters |> String.dropLeft indexB |> String.left 1
-      c = allCharacters |> String.dropLeft indexC |> String.left 1
       target = a++a++a++a++b++b++b++b++a++a++a++a++c++c++c++c++b++b++c++c++a++a++b++b++c++c++b++b++a++b++a++c++a++b
   in
       { target = target
       , userInput = ""
       , progress = 0 }
+
+
+specialCharacterAt : Int -> String
+specialCharacterAt index =
+  allCharacters |> String.dropLeft index |> String.left 1
+
+
+randomCharacterAsString : Random.Generator String
+randomCharacterAsString =
+  Random.int 0 (String.length allCharacters)
+  |> Random.map specialCharacterAt
+
+
+threeRandomCharactersAsStrings : Random.Generator (String,String,String)
+threeRandomCharactersAsStrings =
+  Random.map3 (\a b c -> (a,b,c)) randomCharacterAsString randomCharacterAsString randomCharacterAsString
