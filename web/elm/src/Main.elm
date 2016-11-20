@@ -23,7 +23,7 @@ main =
 
 init : Page -> (Model, Cmd Msg)
 init _ =
-  urlUpdate Home initialModel
+  initialModel |> update Msg.RandomizeExercise
 
 
 urlParser : Navigation.Parser Page
