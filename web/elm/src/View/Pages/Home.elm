@@ -30,7 +30,7 @@ viewMainContent : Model -> Html Msg
 viewMainContent model =
   case model.exercise of
     Nothing ->
-      button [ class "PlayButton", onClick StartExercise ] [ Html.text "Exercise" ]
+      button [ class "PlayButton", onClick NewExercise ] [ Html.text "Exercise" ]
 
     Just exercise ->
       viewPracticePanel exercise

@@ -28,7 +28,7 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
-    StartExercise ->
+    NewExercise ->
       let
           model' = { model | exercise = Just (newExercise model.profile) }
       in
@@ -56,11 +56,11 @@ update action model =
                           model.profile
                     progress' = inputLength |> max exercise.progress
                     exercise' =
-                      if input == exercise.target then
-                          Just (newExercise profile')
+                      if inputLength >= String.length exercise.target then
+                        Just (newExercise model.profile)
                       else
-                          Just { exercise | userInput = input
-                                          , progress = progress' }
+                        Just { exercise | userInput = input
+                                        , progress = progress' }
                 in
                     { model | profile = profile'
                             , exercise = exercise' }
