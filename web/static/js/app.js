@@ -19,3 +19,7 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+setTimeout(function(){
+  document.getElementById("ExerciseInput").focus();
+}, 1500);
