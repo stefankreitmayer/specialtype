@@ -20,8 +20,7 @@ import Msg exposing (..)
 view : Model -> Html Msg
 view model =
   div []
-    [ Html.header [] [ h1 [] [ Html.text "Special Type" ] ]
-    , Html.main' [] [ viewMainContent model ]
+    [ Html.main' [] [ viewMainContent model ]
     , Html.footer [] [ viewProfile model ]
     ]
 
